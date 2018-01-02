@@ -137,30 +137,6 @@ bot.command (:taiki) do |event|
     end
     #ここまでツイートシステム
 
-    def iken
-      File.open("request.txt","a") do |write|
-        write.puts("#{@hito}からのリクエスト、内容は「#{@in}」")
-      end
-    end
-
-    bot.command (:request) do |youbou|
-
-        @hito = youbou.user.name
-
-        youbou.send_message"
-        追加してほしい曲、機能、botの意見などを入力してください
-        複数ある場合は1度に複数記入してください"
-
-        youbou.user.await(:wait) do |naiyou|
-
-          @in = naiyou.message.content
-
-          iken()
-            youbou.send_message"リクエスト完了！"
-        end
-               ""
-      end
-
       bot.command (:roseliacd) do |market|
         market.send_message "https://itunes.apple.com/jp/album/black-shout-ep/1226411401"
         market.send_message "https://itunes.apple.com/jp/album/re-birth-day-ep/id1253751814"
