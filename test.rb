@@ -1,4 +1,4 @@
-::RBNACL_LIBSODIUM_GEM_LIB_PATH = 'libsodium.dll'
+::RBNACL_LIBSODIUM_GEM_LIB_PATH = './libsodium.dll'
 
 require 'discordrb'
 require 'open3'
@@ -154,5 +154,43 @@ bot.command (:taiki) do |event|
 
         event.send_message"これをやりましょう「#{array[ransu]}」"
       end
+
+bot.command(:summon) do |event|
+    bot.game = ("Discord")
+  #!summonと打たれた時に実行する
+channel = event.user.voice_channel
+  #channelという変数?はevent.user.voice_channel(おそらくユーザーがボイスチャンネルに入っているかどうかを判定するやつ)
+  next "ボイスチャンネルに入室してください！" unless channel
+  #!summonと打った人がボイスチャンネルに入ってない時に表示する文  nextとかはよくわからない
+  bot.voice_connect(channel)
+  #botがボイスチャンネルに入った時に実行する
+  "#{channel.name}に入室しました
+!helpで現在再生可能な曲とコマンドが表示されます。"
+end
+
+
+bot.command (:risa)  do |event|
+    if @playing === 1
+      event.voice.stop_playing
+      Open3.capture3('del /s *mp3')
+      play = 1
+    end
+
+sleep (2)
+
+    play = 0
+     bot.game = ("陽だまりロードナイト")
+   i = 0
+    voice_bot = event.voice
+     while play < 1 do
+       @playing = 1
+       i += 1
+       a = i%10
+       if a ===0
+         event.send_message "#{i}回目の再生です。"
+       end
+       voice_bot.play_file('data/risa.m4a')
+     end
+  end
 
 bot.run
