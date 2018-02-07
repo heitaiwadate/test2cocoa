@@ -155,7 +155,7 @@ bot.command (:taiki) do |event|
         event.send_message"これをやりましょう「#{array[ransu]}」"
       end
 
-bot.command (:test) do |event,*code|
+bot.command (:pubg) do |event,*code|
   name = code[0]
 
 url = "https://dak.gg/profile/#{name}"
