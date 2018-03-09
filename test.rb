@@ -145,12 +145,12 @@ bot.command (:taiki) do |event|
       end
 
 
-      array = Array["Skyrim","PUBG","Rust","カスタムメイド3D2","LoL","CSGO","Outlast","Fallout4","Fallout NV","elona","osu!","H1Z1","Destiny2","バンドリ","アズールレーン"]
+      array = Array["Minecraft(ProjectOzone2)","Minecraft","PUBG","R6S","BF4","お絵かきの森","osu!","バンドリ"]
 
 
       bot.command (:game) do |event|
 
-      ransu = rand(0..15)
+      ransu = rand(0..7)
 
         event.send_message"これをやりましょう「#{array[ransu]}」"
       end
