@@ -119,7 +119,7 @@ bot.command (:taiki) do |event|
         config.access_token        = "3501608173-wbOHmiIPi0orTcYWSDIUvTvWk0Yw43kA1lJIxoC"
         config.access_token_secret = "rJ7Fa8yk6jhYBwwPFZpxndo6Ar4prP5kJnK01uOiTXx2i"
     end
-        client.update("Discordから「#{@hito}」のツイートです。『#{@naiyou}』") #実際にツイートする
+        client.update("#{@naiyou}") #実際にツイートする
     end
 
     bot.command (:tweet) do |client|
