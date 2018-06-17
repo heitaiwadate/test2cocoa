@@ -119,12 +119,16 @@ bot.command (:taiki) do |event|
         config.access_token        = "3501608173-wbOHmiIPi0orTcYWSDIUvTvWk0Yw43kA1lJIxoC"
         config.access_token_secret = "rJ7Fa8yk6jhYBwwPFZpxndo6Ar4prP5kJnK01uOiTXx2i"
     end
-        client.update("#{@naiyou}") #実際にツイートする
+    if @user == "kagetu" || @user  == "かげつ" || @user == "utage" || @user =="うたげ" || @user == "かげっちゃん"
+        client.update("#{@user}からのツイート、『#{@naiyou}』") #実際にツイートする
+      end
+    else
+      client.update("#{@naiyou}") #実際にツイートする
     end
 
     bot.command (:tweet) do |client|
 
-      @hito = client.user.name #コマンドを使った人の名前を@hitoに保存する
+      @user = client.user.name #コマンドを使った人の名前を@hitoに保存する
       client.send_message"ツイートしたい内容を入力してください"
       client.user.await(:wait) do |tweet|     #ツイートする内容を取得する
 
