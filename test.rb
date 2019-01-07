@@ -3,6 +3,7 @@
 require 'discordrb'
 require 'open3'
 require 'twitter'
+require 'rbnacl/libsodium'
 
 bot = Discordrb::Commands::CommandBot.new token: 'MzQxNTkxOTIyNTUwNTA1NDcy.DSfVmg.dwQl5M1QhcUm41AdKPdVPexdaSg', prefix: '!'
 
