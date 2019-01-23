@@ -1,4 +1,4 @@
-::RBNACL_LIBSODIUM_GEM_LIB_PATH = './libsodium.dll'
+::RBNACL_LIBSODIUM_GEM_LIB_PATH = 'rbnacl/libsodium'
 
 require 'discordrb'
 require 'open3'
