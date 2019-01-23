@@ -1,5 +1,3 @@
-::RBNACL_LIBSODIUM_GEM_LIB_PATH = 'rbnacl/libsodium'
-
 require 'discordrb'
 require 'open3'
 require 'twitter'
