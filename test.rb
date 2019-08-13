@@ -2,102 +2,149 @@
 require 'discordrb'
 require 'open3'
 require 'twitter'
-require 'rbnacl/libsodium'
-require 'google/apis'
-require 'google/apis/youtube_v3'
-require 'googleauth'
-require 'googleauth/stores/file_token_store'
-require 'active_support/all'
-require 'json'
-require 'time'
-require "date"
 
 
-@bot = Discordrb::Commands::CommandBot.new token: 'NjEwNTUxNzIwNTY0NjIxMzIw.XVG7yw._UkS1YodWoaY-iACjn-l_flDJGY', prefix: '!' 
+bot = Discordrb::Commands::CommandBot.new token: 'Mzc3MzU4Mzk4ODUwNTk2ODY0.DOLyFQ.cHZ-V_If-wP0Vki51z5ZR93ejO4', prefix: '!'
+play = 1
+bot.command(:summon) do |event|
 
+channel = event.user.voice_channel
 
-@bot.command(:start) do |event|
-event = event
-GOOGLE_API_KEY="AIzaSyD2urTlYpvJU_iSvDRLBR3_2FVAvb3crFM"
-@snippet2 = nil
-@channel_name = event.channel.name
-@temp = '2019-08-13T22:00:00'
-def timer(arg, &proc)
-  x = case arg
-  when Numeric then arg
-  when Time    then arg - Time.now
-  when String  then Time.parse(arg) - Time.now
-  else raise   
-  end
-  sleep x if block_given?
-  yield
+  next "ボイスチャンネルに入室してください！" unless channel
+
+  bot.voice_connect(channel)
+  "#{channel.name}に入室しました
+!helpで現在再生可能な曲とコマンドが表示されます。"
 end
 
-def s(event)
-  puts "sleep"
-  sleep(3600)
- find_videos(event)
-end
+#再生を止める
 
-def find_videos(event)
-    @bot.game=("配信予定はありません")
-    service = Google::Apis::YoutubeV3::YouTubeService.new
-    service.key = GOOGLE_API_KEY
-  next_page_token = nil
-url = "https://www.youtube.com/watch?v="
-  begin
 
-opt2 ={
-      channel_id:"UCZ1xuCK1kNmn5RzPYIZop3w",
-      event_type:"upcoming",
-      page_token: next_page_token,
-      type: "video",
-      max_results: "1",
-    }
-      @live = service.list_searches(:snippet, opt2)
-      @live.items.each do|item2|
-        @snippet2 = item2.id
-          puts  @snippet2.video_id
-      end
-if @live.nil? == true||  @live.blank? == true|| @live==" " || @live == nil || @snippet2.nil?
-  s(event)
-end
 
-url += @snippet2.video_id
 
-    opt = {
-      id:  @snippet2.video_id,
-      page_token: next_page_token,
-    }
 
-    results = service.list_videos(:liveStreamingDetails, opt)
-    i=0   
-    results.items.each do |item|
-      snippet = item.live_streaming_details
-      a = snippet.scheduled_start_time.new_offset('+09:00')
-      f = a.to_s
-      t = DateTime.parse(f);
-      @f = t.to_s
-      @f.slice!(19,25)
-      if @temp.eql?(@f)
-        s(event)
-      end
-      @temp = @f
-      @bot.game=("#{@f}に配信予定")
-      puts @f
-      puts url
-    end
-timer(Time.parse(@f)) do
-  event.send_message("#{event.user.mention}\n配信開始時間です\n#{url}")
-    end
-    @bot.game=("配信予定はありません")
-      puts "32700sleep"
-        sleep(32700)
-        find_videos(event)
+bot.command (:stop) do |event|
+  play = 1
+  bot.game = ("何もしてないよ！")
+  event.voice.stop_playing
+  def stop()
+      event.voice.stop_playing
   end
 end
 
-find_videos(event)
 
+bot.command(:play?) do |event|
+  stats = event.voice.playing?
 end
-@bot.run
+
+bot.command (:exit) do |event|
+  bot.game = ("何もしてないよ！")
+  event.voice.destroy
+end
+
+bot.command(:pause) do |event|
+  event.voice.pause
+end
+
+bot.command(:cont) do |event|
+  event.voice.continue
+end
+
+
+#youtube
+
+def youtube(url)
+  Open3.capture3('youtube-dl -x --audio-format mp3 --id --no-cache-dir ' + "#{url}")
+  Open3.capture3('ren *.mp3 a.mp3')
+end
+
+
+bot.command (:play) do |event,*url|
+  play = 0
+  bot.game = ("Youtube")
+  Open3.capture3('del /s *mp3')
+  url = url[0]
+
+  youtube(url)
+
+  sleep(2)
+
+  event.send_message "ダウンロードが終わりました再生します"
+
+  while play < 1 do
+    event.voice.play_file("a.mp3")
+  end
+end
+#ここまでyoutube
+
+
+
+#音楽
+
+
+  bot.command (:pastel)  do |event|
+
+
+
+
+  play = 0
+
+   bot.game = ("世界は恋に落ちている")
+
+   i = 0
+
+     while play < 1 do
+       i += 1
+       a = i%10
+
+       if a ===0
+         event.send_message "#{i}回目の再生です。"
+       end
+
+      event.voice.play_file('data/otaku.m4a')
+     end
+  end
+
+  bot.command (:rebirth) do |event|
+
+    play = 0
+
+    bot.game = ("Re:birth day")
+
+   i = 0
+
+     while play < 1 do
+
+       i += 1
+       a = i%10
+
+       if a ===0
+         event.send_message "#{i}回目の再生です。"
+       end
+
+       event.voice.play_file('data/Rebirth.m4a')
+     end
+  end
+
+#遊び
+
+ bot.command (:tweet) do |client|
+
+      hito = client.user.name #コマンドを使った人の名前を保存
+      client.send_message"ツイートしたい内容を入力してください"
+
+      client.user.await(:wait) do |tweet|     #ツイートする内容を取得する
+      naiyou = tweet.message.content  #ツイートする内容を保存する
+
+
+      client = Twitter::REST::Client.new do |config|     #ツイートするアカウントの情報を取得
+        config.consumer_key        = "K4R6MNRZzLkYU73QOtoT8yqct"
+        config.consumer_secret     = "8H9TT23mPuuhQ16olm1TwO05wSpkHIqIW2BtfVah6QRW3JiztL"
+        config.access_token        = "3501608173-wbOHmiIPi0orTcYWSDIUvTvWk0Yw43kA1lJIxoC"
+        config.access_token_secret = "rJ7Fa8yk6jhYBwwPFZpxndo6Ar4prP5kJnK01uOiTXx2i"
+    end
+        client.update("Discordから「#{hito}」のツイートです。『#{naiyou}』") #ツイート
+  end
+end
+
+bot.run
