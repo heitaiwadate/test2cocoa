@@ -6,8 +6,6 @@ require 'twitter'
 
 bot = Discordrb::Commands::CommandBot.new token: 'Mzc3MzU4Mzk4ODUwNTk2ODY0.DOLyFQ.cHZ-V_If-wP0Vki51z5ZR93ejO4', prefix: '!'
 
-play = voice.playing?
-
 #遊び
 
 bot.command (:taiki) do |event|
