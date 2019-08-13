@@ -1,5 +1,5 @@
-require 'rbnacl/libsodium'
 ::RBNACL_LIBSODIUM_GEM_LIB_PATH = './libsodium.dll'
+require 'rbnacl/libsodium'
 require 'discordrb'
 require 'open3'
 require 'twitter'
