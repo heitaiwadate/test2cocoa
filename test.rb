@@ -1,7 +1,7 @@
+::RBNACL_LIBSODIUM_GEM_LIB_PATH = './libsodium.dll'
 require 'discordrb'
 require 'open3'
 require 'twitter'
-require 'rbnacl/libsodium'
 require 'google/apis'
 require 'google/apis/youtube_v3'
 require 'googleauth'
