@@ -27,6 +27,7 @@ GEM
     event_emitter (0.2.6)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
+    ffi (1.11.1)
     ffi (1.11.1-x86-mingw32)
     google-api-client (0.30.8)
       addressable (~> 2.5, >= 2.5.1)
@@ -81,6 +82,11 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    rest-client (2.1.0.rc1)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rest-client (2.1.0.rc1-x86-mingw32)
       ffi (~> 1.9)
       http-accept (>= 1.7.0, < 2.0)
@@ -106,7 +112,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (1.2.5)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uber (0.1.0)
     unf (0.1.4)
@@ -118,6 +124,7 @@ GEM
       websocket
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
